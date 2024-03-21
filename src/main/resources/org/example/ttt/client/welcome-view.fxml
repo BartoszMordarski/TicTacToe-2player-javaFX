@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" prefHeight="396.0" prefWidth="424.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ttt.client.WelcomeViewController">
+    <children>
+        <Label alignment="CENTER" prefHeight="90.0" prefWidth="298.0" text="Welcome to Tic Tac Toe game!" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <AnchorPane prefHeight="208.0" prefWidth="424.0">
+         <children>
+            <Label layoutX="32.0" layoutY="91.0" text="Enter your username:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+              <TextField fx:id="usernameField" alignment="CENTER" layoutX="193.0" layoutY="81.0" prefHeight="38.0" prefWidth="179.0" promptText="Enter your username" />
+         </children>
+      </AnchorPane>
+      <Button fx:id="joinGame" mnemonicParsing="false" onAction="#joinGame" prefHeight="47.0" prefWidth="109.0" text="Join Game!" />
+    </children>
+</VBox>

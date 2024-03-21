@@ -1,0 +1,57 @@
+= Design of Tic Tac Toe application
+
+
+[plantuml]
+----
+actor "User X" as user1
+actor "User O" as user2
+box Client App 1
+participant "Welcome window" as welcome_controller
+participant "Game window" as game_controller
+end box
+box Client App 2
+participant "Welcome window" as welcome_controller2
+participant "Game window" as game_controller2
+end box
+box server
+participant Server as server
+participant "Client handler 1\nThread 1" as ch1
+participant "Client handler 2\nThread 2" as ch2
+end box
+
+activate server
+activate user1
+user1 -> welcome_controller: Start the application
+activate welcome_controller
+welcome_controller -> server: Initiate connection
+server -> server: Accept connection from \nthe client on new socket
+server -> ch1: Create new thread with instance of \nClientHandler with reference\nto the socket and Game object
+activate ch1
+server --> welcome_controller: Connection established
+user1 -> welcome_controller: Enter user name and click\n "Join game"
+welcome_controller -> ch1: send GAME_INIT command
+ch1 -> ch1: Update Game object\n with user name 1
+ch1 --> welcome_controller: send OK_WAIT command
+welcome_controller -> welcome_controller: Display window with information about\nwaiting for the other player
+
+
+activate user2
+user2 -> welcome_controller2: Start the application
+activate welcome_controller2
+welcome_controller2 -> server: Initiate connection
+server -> server: Accept connection from \nthe client on new socket
+server -> ch2: Create new thread with instance of \nClientHandler with reference\nto the socket and Game object
+activate ch2
+server --> welcome_controller2: Connection established
+user2 -> welcome_controller2: Enter user name and click\n "Join game"
+welcome_controller2 -> ch2: send GAME_INIT command
+ch2 -> ch2: Update Game object\n with user name 2
+ch2 --> welcome_controller2: send OK_GO command
+welcome_controller2 -> game_controller2: Open Game window with active buttons
+activate game_controller2
+
+ch1 -> ch1: Periodically check Game object state
+ch1 -> ch1: After detecting that new user\njoined the game send\nOK_GO command
+ch1 -> welcome_controller
+
+----
